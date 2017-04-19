@@ -38,7 +38,8 @@ public class SparkApp {
         // let's count how many unique users made purchases
         long uniqueUsers = data.map(strings -> strings[0]).distinct().count();
         // let's sum up our total revenue
-        double totalRevenue = data.map(strings -> Double.parseDouble(strings[2]))
+        double totalRevenue = data
+                .map(strings -> Double.parseDouble(strings[2]))
                 .reduce((a, b) -> a + b).doubleValue();
         System.out.println("Total purchases: " + numPurchases);
         System.out.println("Unique users: " + uniqueUsers);

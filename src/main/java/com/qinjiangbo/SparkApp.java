@@ -1,11 +1,14 @@
 package com.qinjiangbo;
 
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import scala.Tuple2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,13 +53,21 @@ public class SparkApp {
         // and the Tuple2 class.
         // then we call a reduceByKey operation with a Function2,
         // which is essentially the sum function
-        List<Tuple2<String, Integer>> pairs = data
-                .map(strings -> new Tuple2<>(strings[1], 1))
-                .collect();
-        pairs.forEach(s-> System.out.println(s._1 + " - " + s._2));
+        JavaPairRDD<String, Integer> pairs = data
+                .mapToPair(strings -> new Tuple2<>(strings[1], 1));
+        List<Tuple2<String, Integer>> list = pairs
+                .reduceByKey((a, b) -> a+b).collect();
+
+        // sort list
+        list = new ArrayList<>(list);
+        Collections.sort(list, (o1, o2) -> -(o1._2 - o2._2));
+        String mostPopular = list.get(0)._1();
+        int purchases = list.get(0)._2();
 
         System.out.println("Total purchases: " + numPurchases);
         System.out.println("Unique users: " + uniqueUsers);
         System.out.println("Total revenue: " + totalRevenue);
+        System.out.println(String.format("Most popular product: %s with " +
+                "%d purchases", mostPopular, purchases));
     }
 }

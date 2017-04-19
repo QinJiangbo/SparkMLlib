@@ -3,6 +3,10 @@ package com.qinjiangbo;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
+import scala.Tuple2;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @date: 19/04/2017 5:00 PM
@@ -41,6 +45,16 @@ public class SparkApp {
         double totalRevenue = data
                 .map(strings -> Double.parseDouble(strings[2]))
                 .reduce((a, b) -> a + b).doubleValue();
+        // let's find our most popular product
+        // first we map the data to records of (product, 1) using a PairFunction
+        // and the Tuple2 class.
+        // then we call a reduceByKey operation with a Function2,
+        // which is essentially the sum function
+        List<Tuple2<String, Integer>> pairs = data
+                .map(strings -> new Tuple2<>(strings[1], 1))
+                .collect();
+        pairs.forEach(s-> System.out.println(s._1 + " - " + s._2));
+
         System.out.println("Total purchases: " + numPurchases);
         System.out.println("Unique users: " + uniqueUsers);
         System.out.println("Total revenue: " + totalRevenue);

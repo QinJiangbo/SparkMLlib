@@ -33,6 +33,15 @@ public class SparkApp {
         JavaRDD<String[]> data = sparkContext.textFile(filePath)
                 .map(s -> s.split(","));
 
-
+        // let's count the number of purchases
+        long numPurchases = data.count();
+        // let's count how many unique users made purchases
+        long uniqueUsers = data.map(strings -> strings[0]).distinct().count();
+        // let's sum up our total revenue
+        double totalRevenue = data.map(strings -> Double.parseDouble(strings[2]))
+                .reduce((a, b) -> a + b).doubleValue();
+        System.out.println("Total purchases: " + numPurchases);
+        System.out.println("Unique users: " + uniqueUsers);
+        System.out.println("Total revenue: " + totalRevenue);
     }
 }

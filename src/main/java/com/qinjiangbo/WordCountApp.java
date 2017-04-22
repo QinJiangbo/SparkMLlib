@@ -15,14 +15,14 @@ import java.util.List;
  * @date: 19/04/2017 5:00 PM
  * @author: qinjiangbo@github.io
  */
-public class SparkApp {
+public class WordCountApp {
 
     public static void main(String[] args) {
 
         // initialize spark session
         SparkSession sparkSession = SparkSession
                 .builder()
-                .appName("Spark App")
+                .appName("Word Count App")
                 // local[N] | spark://** | mesos|zk://** | simr://**
                 .master("local[2]")
                 .getOrCreate();

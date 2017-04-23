@@ -35,7 +35,7 @@ public class MovieItemApp {
 
         JavaRDD<String[]> data = items.map(string -> string.split("\\|"));
         JavaPairRDD<String, Integer> pairs = data
-                .mapToPair(strings -> new Tuple2<>(strings[2].split("-")[2], 1));
+                .mapToPair(strings -> new Tuple2<>(strings[2], 1));
 
         List<Tuple2<String, Integer>> list = pairs
                 .reduceByKey((a , b) -> a + b).collect();

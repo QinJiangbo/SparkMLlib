@@ -1,6 +1,5 @@
 package com.qinjiangbo;
 
-import org.apache.spark.Partition;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -39,10 +38,6 @@ public class WordCountApp {
 
         JavaRDD<String[]> data = sparkContext.textFile(filePath)
                 .map(s -> s.split(","));
-        List<Partition> partitions = data.partitions();
-        for (Partition partition: partitions) {
-            System.out.println(partition.hashCode());
-        }
 
         // let's count the number of purchases
         long numPurchases = data.count();

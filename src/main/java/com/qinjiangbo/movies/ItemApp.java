@@ -5,4 +5,11 @@ package com.qinjiangbo.movies;
  * @author: qinjiangbo@github.io
  */
 public class ItemApp {
+
+    private static final String BASE_PATH =
+            "/Users/Richard/Documents/SparkML-DataSet/ml-100k/";
+
+    public static void main(String[] args) {
+
+    }
 }

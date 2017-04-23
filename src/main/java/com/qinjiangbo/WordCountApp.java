@@ -34,8 +34,8 @@ public class WordCountApp {
         // we take the raw data in CSV format and convert it into
         // a set of records of the form (user, product, price)
 
-        String filePath = System.getProperty("user.dir") +
-                "/src/main/resources/UserPurchaseHistory.csv";
+        String filePath =
+                "/Users/Richard/Documents/SparkML-DataSet/UserPurchaseHistory.csv";
 
         JavaRDD<String[]> data = sparkContext.textFile(filePath)
                 .map(s -> s.split(","));

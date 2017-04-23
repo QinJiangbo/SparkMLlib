@@ -8,7 +8,7 @@ import org.apache.spark.sql.SparkSession;
  * @date: 23/04/2017 5:53 PM
  * @author: qinjiangbo@github.io
  */
-public class UserApp {
+public class MovieUserApp {
 
     private static final String BASE_PATH =
             "/Users/Richard/Documents/SparkML-DataSet/ml-100k/";

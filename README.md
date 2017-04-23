@@ -1,2 +1,2 @@
 # SparkMLlib
-Spark Mechine Learning lib usage samples.
+Spark Machine Learning lib usage samples.

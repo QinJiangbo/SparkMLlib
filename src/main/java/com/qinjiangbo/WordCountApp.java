@@ -73,5 +73,8 @@ public class WordCountApp {
         System.out.println("Total revenue: " + totalRevenue);
         System.out.println(String.format("Most popular product: %s with " +
                 "%d purchases", mostPopular, purchases));
+
+        // stop session
+        sparkSession.stop();
     }
 }

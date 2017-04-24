@@ -25,8 +25,22 @@ public class MovieDataApp {
                 new JavaSparkContext(sparkSession.sparkContext());
 
         JavaRDD<String> javaRDD = sparkContext.textFile(BASE_PATH + "u.data");
-        System.out.println(javaRDD.first());
-        System.out.println("Total records: " + javaRDD.count());
+        JavaRDD<String[]> data = javaRDD.map(string -> string.split("\t"));
+        long userNums = data.map(strings -> strings[0]).distinct().count();
+        long movieNums = data.map(strings -> strings[1]).distinct().count();
+        JavaRDD<Integer> ratings = data.map(strings -> Integer.valueOf(strings[2]));
+        long maxRating = ratings.reduce((a, b) -> Math.max(a, b));
+        long minRating = ratings.reduce((a, b) -> Math.min(a, b));
+        long ratingNums = ratings.count();
+        double meanRating = ratings.reduce((a, b) -> (a + b)) / (double) ratingNums;
+        long ratingsPerUser = ratingNums / userNums;
+        long ratingsPerMovie = ratingNums / movieNums;
+
+        System.out.println("Min rating: " + minRating);
+        System.out.println("Max rating: " + maxRating);
+        System.out.println("Average rating: " + meanRating);
+        System.out.println("Average # of ratings per user: " + ratingsPerUser);
+        System.out.println("Average # of ratings per movie: " + ratingsPerMovie);
 
         sparkSession.stop();
     }

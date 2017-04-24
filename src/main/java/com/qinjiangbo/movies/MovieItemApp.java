@@ -34,6 +34,7 @@ public class MovieItemApp {
         System.out.println("Movies: " + items.count());
 
         JavaRDD<String[]> data = items.map(string -> string.split("\\|"));
+        // 过滤strings[2]为空的数据
         data = data.filter(strings -> strings[2].split("-").length == 3);
         JavaRDD<String[]> years = data.map(strings -> strings[2].split("-"));
         JavaPairRDD<String, Integer> pairs = years

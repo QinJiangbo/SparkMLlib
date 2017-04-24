@@ -1,8 +1,12 @@
 package com.qinjiangbo.movies;
 
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
+import scala.Tuple2;
+
+import java.util.List;
 
 /**
  * @date: 24/04/2017 9:45 AM
@@ -41,6 +45,20 @@ public class MovieDataApp {
         System.out.println("Average rating: " + meanRating);
         System.out.println("Average # of ratings per user: " + ratingsPerUser);
         System.out.println("Average # of ratings per movie: " + ratingsPerMovie);
+
+        // user ratings by user
+        JavaPairRDD<String, Integer> userPairs = data
+                .mapToPair(strings -> new Tuple2<>(strings[0], 1));
+        List<Tuple2<String, Integer>> uPairList =
+                userPairs.reduceByKey((a, b) -> a + b).collect();
+        System.out.println("user: " + uPairList.get(0)._1 + " - " + uPairList.get(0)._2);
+
+        // movie ratings by movie
+        JavaPairRDD<String, Integer> moviePairs = data
+                .mapToPair(strings -> new Tuple2<>(strings[1], 1));
+        List<Tuple2<String, Integer>> mPairList =
+                moviePairs.reduceByKey((a, b) -> a + b).collect();
+        System.out.println("movie: " + mPairList.get(0)._1 + " - " + mPairList.get(0)._2);
 
         sparkSession.stop();
     }

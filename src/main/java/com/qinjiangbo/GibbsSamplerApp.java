@@ -1,8 +1,5 @@
 package com.qinjiangbo;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 /**
  * @date: 05/05/2017 1:45 PM
  * @author: qinjiangbo@github.io
@@ -464,75 +461,12 @@ public class GibbsSamplerApp {
         lda.gibbs(K, alpha, beta);
 
         double[][] theta = lda.getTheta();
-        double[][] phi = lda.getPhi();
+        double[][] phi = lda.getPhi(); // inference new document
 
-        System.out.println();
-        System.out.println();
-        System.out.println("Document--Topic Associations, Theta[d][k] (alpha="
-                + alpha + ")");
-        System.out.print("d\\k\t");
-        for (int m = 0; m < theta[0].length; m++) {
-            System.out.print("   " + m % 10 + "    ");
-        }
-        System.out.println();
-        for (int m = 0; m < theta.length; m++) {
-            System.out.print(m + "\t");
-            for (int k = 0; k < theta[m].length; k++) {
-                // System.out.print(theta[m][k] + " ");
-                System.out.print(shadeDouble(theta[m][k], 1) + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println("Topic--Term Associations, Phi[k][w] (beta=" + beta
-                + ")");
-
-        System.out.print("k\\w\t");
-        for (int w = 0; w < phi[0].length; w++) {
-            System.out.print("   " + w % 10 + "    ");
-        }
-        System.out.println();
-        for (int k = 0; k < phi.length; k++) {
-            System.out.print(k + "\t");
-            for (int w = 0; w < phi[k].length; w++) {
-                // System.out.print(phi[k][w] + " ");
-                System.out.print(shadeDouble(phi[k][w], 1) + " ");
-            }
-            System.out.println();
-        }
         // Let's inference a new document
         int[] aNewDocument = {2, 2, 4, 2, 4, 2, 2, 2, 2, 4, 2, 2};
         double[] newTheta = inference(alpha, beta, phi, aNewDocument);
-        for (int k = 0; k < newTheta.length; k++) {
-            // System.out.print(theta[m][k] + " ");
-            System.out.print(shadeDouble(newTheta[k], 1) + " ");
-        }
+
         System.out.println();
-    }
-
-    static String[] shades = {"     ", ".    ", ":    ", ":.   ", "::   ",
-            "::.  ", ":::  ", ":::. ", ":::: ", "::::.", ":::::"};
-
-    static NumberFormat lnf = new DecimalFormat("00E0");
-
-    /**
-     * create a string representation whose gray value appears as an indicator
-     * of magnitude, cf. Hinton diagrams in statistics.
-     *
-     * @param d   value
-     * @param max maximum value
-     * @return
-     */
-    public static String shadeDouble(double d, double max) {
-        int a = (int) Math.floor(d * 10 / max + 0.5);
-        if (a > 10 || a < 0) {
-            String x = lnf.format(d);
-            a = 5 - x.length();
-            for (int i = 0; i < a; i++) {
-                x += " ";
-            }
-            return "<" + x + ">";
-        }
-        return "[" + shades[a] + "]";
     }
 }

@@ -111,8 +111,6 @@ public class GibbsSamplerApp {
      */
     private static int SAMPLE_LAG = 10;
 
-    private static int dispcol = 0;
-
     /**
      * Initialise the Gibbs sampler with data.<br>
      * 用数据初始化采样器
@@ -211,25 +209,9 @@ public class GibbsSamplerApp {
                 }
             }
 
-            if ((i < BURN_IN) && (i % THIN_INTERVAL == 0)) {
-                System.out.print("B");
-                dispcol++;
-            }
-            // display progress
-            if ((i > BURN_IN) && (i % THIN_INTERVAL == 0)) {
-                System.out.print("S");
-                dispcol++;
-            }
             // get statistics after burn-in
             if ((i > BURN_IN) && (SAMPLE_LAG > 0) && (i % SAMPLE_LAG == 0)) {
                 updateParams();
-                System.out.print("|");
-                if (i % THIN_INTERVAL != 0)
-                    dispcol++;
-            }
-            if (dispcol >= 100) {
-                System.out.println();
-                dispcol = 0;
             }
         }
         System.out.println();
@@ -351,45 +333,6 @@ public class GibbsSamplerApp {
     }
 
     /**
-     * Print table of multinomial data
-     *
-     * @param data vector of evidence
-     * @param fmax max frequency in display
-     * @return the scaled histogram bin values
-     */
-    public static void hist(double[] data, int fmax) {
-
-        double[] hist = new double[data.length];
-        // scale maximum
-        double hmax = 0;
-        for (int i = 0; i < data.length; i++) {
-            hmax = Math.max(data[i], hmax);
-        }
-        double shrink = fmax / hmax;
-        for (int i = 0; i < data.length; i++) {
-            hist[i] = shrink * data[i];
-        }
-
-        NumberFormat nf = new DecimalFormat("00");
-        String scale = "";
-        for (int i = 1; i < fmax / 10 + 1; i++) {
-            scale += "    .    " + i % 10;
-        }
-
-        System.out.println("x" + nf.format(hmax / fmax) + "\t0" + scale);
-        for (int i = 0; i < hist.length; i++) {
-            System.out.print(i + "\t|");
-            for (int j = 0; j < Math.round(hist[i]); j++) {
-                if ((j + 1) % 10 == 0)
-                    System.out.print("]");
-                else
-                    System.out.print("|");
-            }
-            System.out.println();
-        }
-    }
-
-    /**
      * Configure the gibbs sampler<br>
      * 配置采样器
      *
@@ -487,10 +430,6 @@ public class GibbsSamplerApp {
             theta[k] = (nd[k] + alpha) / (ndsum + K * alpha);
         }
         return theta;
-    }
-
-    public static double[] inference(double[][] phi, int[] doc) {
-        return inference(2.0, 0.5, phi, doc);
     }
 
     /**

@@ -85,12 +85,6 @@ public class GibbsSamplerApp {
     int numstats;
 
     /**
-     * sampling lag (?)<br>
-     * 多久更新一次统计量
-     */
-    private static int THIN_INTERVAL = 20;
-
-    /**
      * burn-in period<br>
      * 收敛前的迭代次数
      */
@@ -184,10 +178,6 @@ public class GibbsSamplerApp {
 
         // initial state of the Markov chain:
         initialState(K);
-
-        System.out.println("Sampling " + ITERATIONS
-                + " iterations with burn-in of " + BURN_IN + " (B/S="
-                + THIN_INTERVAL + ").");
 
         for (int i = 0; i < ITERATIONS; i++) {
 
@@ -331,14 +321,11 @@ public class GibbsSamplerApp {
      *
      * @param iterations   number of total iterations
      * @param burnIn       number of burn-in iterations
-     * @param thinInterval update statistics interval
      * @param sampleLag    sample interval (-1 for just one sample at the end)
      */
-    public void configure(int iterations, int burnIn, int thinInterval,
-                          int sampleLag) {
+    public void configure(int iterations, int burnIn, int sampleLag) {
         ITERATIONS = iterations;
         BURN_IN = burnIn;
-        THIN_INTERVAL = thinInterval;
         SAMPLE_LAG = sampleLag;
     }
 

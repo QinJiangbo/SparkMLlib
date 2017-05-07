@@ -422,40 +422,44 @@ public class GibbsSamplerApp {
 
         // words in documents
         int[][] documents = {
-                {1, 4, 3, 2, 3, 1, 4, 3, 2, 3, 1, 4, 3, 2, 3, 6},
-                {2, 2, 4, 2, 4, 2, 2, 2, 2, 4, 2, 2},
-                {1, 6, 5, 6, 0, 1, 6, 5, 6, 0, 1, 6, 5, 6, 0, 0},
-                {5, 6, 6, 2, 3, 3, 6, 5, 6, 2, 2, 6, 5, 6, 6, 6, 0},
-                {2, 2, 4, 4, 4, 4, 1, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 0},
-                {5, 4, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2}};  // 文档的词语id集合
-        printTwoDimArray(documents);
+                {1, 4, 3, 1, 0},
+                {2, 6, 1, 5},
+                {3, 1, 0, 1, 4, 6}
+        };// 文档的词语id集合
 
-//        // vocabulary
-//        int V = 7;                                      // 词表大小
-//        int M = documents.length;
-//        // # topics
-//        int K = 2;                                      // 主题数目
-//        // good values alpha = 2, beta = .5
-//        double alpha = 2;
-//        double beta = .5;
-//
-//        System.out.println("Latent Dirichlet Allocation using Gibbs Sampling.");
-//
-//        GibbsSamplerApp lda = new GibbsSamplerApp(documents, V);
-//        lda.configure(10000, 2000, 100, 10);
-//        lda.gibbs(K, alpha, beta);
-//
-//        double[][] theta = lda.getTheta();
-//        double[][] phi = lda.getPhi(); // inference new document
-//
-//        // Let's inference a new document
-//        int[] aNewDocument = {2, 2, 4, 2, 4, 2, 2, 2, 2, 4, 2, 2};
-//        double[] newTheta = inference(alpha, beta, phi, aNewDocument);
-//
-//        System.out.println();
+        // vocabulary
+        int V = 7;                                      // 词表大小
+        int M = documents.length;
+        // # topics
+        int K = 2;                                      // 主题数目
+        // good values alpha = 2, beta = .5
+        double alpha = 2;
+        double beta = .5;
+
+        System.out.println("Latent Dirichlet Allocation using Gibbs Sampling.");
+
+        GibbsSamplerApp lda = new GibbsSamplerApp(documents, V);
+        lda.configure(1000, 200, 100);
+        lda.gibbs(K, alpha, beta);
+
+        double[][] theta = lda.getTheta();
+        double[][] phi = lda.getPhi(); // inference new document
+        lda.printTwoDimArray(lda.z);
+        System.out.println("=========================");
+        lda.printTwoDimArray(theta);
+        System.out.println("=========================");
+        lda.printTwoDimArray(phi);
+        System.out.println("=========================");
+
+        // Let's inference a new document
+        int[] aNewDocument = {2, 2, 4, 2, 4, 2, 2, 2, 2, 4, 2, 2};
+        double[] newTheta = inference(alpha, beta, phi, aNewDocument);
+        lda.printOneDimArray(newTheta);
+
+        System.out.println();
     }
 
-    public static void printTwoDimArray(int[][] arr) {
+    public void printTwoDimArray(int[][] arr) {
         int M = arr.length;
         for (int i = 0; i < M; i++) {
             System.out.print("[ ");
@@ -466,7 +470,7 @@ public class GibbsSamplerApp {
         }
     }
 
-    public static void printTwoDimArray(double[][] arr) {
+    public void printTwoDimArray(double[][] arr) {
         int M = arr.length;
         for (int i = 0; i < M; i++) {
             System.out.print("[ ");
@@ -477,7 +481,7 @@ public class GibbsSamplerApp {
         }
     }
 
-    public static void printOneDimArray(int[] arr) {
+    public void printOneDimArray(int[] arr) {
         System.out.print("[ ");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
@@ -485,7 +489,7 @@ public class GibbsSamplerApp {
         System.out.println("]");
     }
 
-    public static void printOneDimArray(double[] arr) {
+    public void printOneDimArray(double[] arr) {
         System.out.print("[ ");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");

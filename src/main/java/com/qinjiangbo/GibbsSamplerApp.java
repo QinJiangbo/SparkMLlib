@@ -319,9 +319,9 @@ public class GibbsSamplerApp {
      * Configure the gibbs sampler<br>
      * 配置采样器
      *
-     * @param iterations   number of total iterations
-     * @param burnIn       number of burn-in iterations
-     * @param sampleLag    sample interval (-1 for just one sample at the end)
+     * @param iterations number of total iterations
+     * @param burnIn     number of burn-in iterations
+     * @param sampleLag  sample interval (-1 for just one sample at the end)
      */
     public void configure(int iterations, int burnIn, int sampleLag) {
         ITERATIONS = iterations;

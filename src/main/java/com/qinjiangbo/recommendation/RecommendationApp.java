@@ -6,7 +6,11 @@ package com.qinjiangbo.recommendation;
  */
 public class RecommendationApp {
 
+    private static final String BASE_PATH =
+            "/Users/Richard/Documents/SparkML-DataSet/ml-100k/";
+
     public static void main(String[] args) {
-        System.out.println("This is a recommendation application.");
+
     }
+
 }

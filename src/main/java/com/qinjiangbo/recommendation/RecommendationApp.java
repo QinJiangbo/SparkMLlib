@@ -1,5 +1,6 @@
 package com.qinjiangbo.recommendation;
 
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
@@ -22,6 +23,13 @@ public class RecommendationApp {
 
         JavaSparkContext sparkContext =
                 new JavaSparkContext(sparkSession.sparkContext());
+
+        JavaRDD<String> javaRDD
+                = sparkContext.textFile(BASE_PATH + "u.data");
+
+        System.out.println(javaRDD.first());
+
+        sparkSession.stop();
     }
 
 }

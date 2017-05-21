@@ -4,6 +4,8 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
+import java.util.Arrays;
+
 /**
  * @date: 19/05/2017 4:25 PM
  * @author: qinjiangbo@github.io
@@ -24,10 +26,11 @@ public class RecommendationApp {
         JavaSparkContext sparkContext =
                 new JavaSparkContext(sparkSession.sparkContext());
 
-        JavaRDD<String> javaRDD
+        JavaRDD<String> rawData
                 = sparkContext.textFile(BASE_PATH + "u.data");
 
-        System.out.println(javaRDD.first());
+        JavaRDD<String[]> rawStrings = rawData.map(s -> s.split("\t"));
+        System.out.println(Arrays.toString(rawStrings.first()));
 
         sparkSession.stop();
     }

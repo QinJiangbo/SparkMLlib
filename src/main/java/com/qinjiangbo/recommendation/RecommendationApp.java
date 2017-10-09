@@ -1,5 +1,6 @@
 package com.qinjiangbo.recommendation;
 
+import com.qinjiangbo.utils.PathUtil;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
@@ -12,8 +13,7 @@ import java.util.Arrays;
  */
 public class RecommendationApp {
 
-    private static final String BASE_PATH =
-            "/Users/richard/Documents/SparkML-DataSet/ml-100k/";
+    private static final String BASE_PATH = PathUtil.DATASET_PATH + "ml-100k/";
 
     public static void main(String[] args) {
 

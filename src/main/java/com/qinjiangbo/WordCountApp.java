@@ -1,5 +1,6 @@
 package com.qinjiangbo;
 
+import com.qinjiangbo.utils.PathUtil;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -33,8 +34,7 @@ public class WordCountApp {
         // we take the raw data in CSV format and convert it into
         // a set of records of the form (user, product, price)
 
-        String filePath =
-                "/Users/Richard/Documents/SparkML-DataSet/UserPurchaseHistory.csv";
+        String filePath = PathUtil.DATASET_PATH + "UserPurchaseHistory.csv";
 
         JavaRDD<String[]> data = sparkContext.textFile(filePath)
                 .map(s -> s.split(","));

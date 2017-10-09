@@ -1,5 +1,6 @@
 package com.qinjiangbo.movies;
 
+import com.qinjiangbo.utils.PathUtil;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -16,8 +17,7 @@ import java.util.List;
  */
 public class MovieItemApp {
 
-    private static final String BASE_PATH =
-            "/Users/Richard/Documents/SparkML-DataSet/ml-100k/";
+    private static final String BASE_PATH = PathUtil.DATASET_PATH + "ml-100k/";
 
     public static void main(String[] args) {
 

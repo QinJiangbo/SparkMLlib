@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class RecommendationApp {
 
     private static final String BASE_PATH =
-            "/Users/Richard/Documents/SparkML-DataSet/ml-100k/";
+            "/Users/richard/Documents/SparkML-DataSet/ml-100k/";
 
     public static void main(String[] args) {
 
